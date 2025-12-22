@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<title>Қазақстан – Танымдық сабақ</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(#cce7ff, #ffffff);
+}
+
+h1 { color: #0057a8; }
+
+#map-container {
+  position: relative;
+  display: inline-block;
+}
+
+#map {
+  width: 650px;
+  border: 3px solid #0057a8;
+}
+
+.marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: red;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+/* Ақ терезе */
+#modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+#modalContent {
+  background: white;
+  width: 300px;
+  margin: 150px auto;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.answer {
+  border: 1px solid #999;
+}
+.selected { background: yellow; }
+.correct { background: lightgreen; }
+.wrong { background: #ffb3b3; }
+
+video {
+  width: 300px;
+  margin: 10px;
+  border: 2px solid #0057a8;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🇰🇿 Қазақстанның әйгілі жерлері</h1>
+
+<!-- 🎵 ФОН МУЗЫКА -->
+<audio autoplay loop>
+  <source src="ән.mp3">
+</audio>
+
+<!-- 🗺️ КАРТА -->
+<div id="map-container">
+  <img id="map" src="3.jpeg">
+
+  <!-- АСТАНА -->
+  <div class="marker"
+       style="top:36%; left:53%;"
+       onclick="showInfo('Астана – Қазақстан астанасы')"></div>
+
+  <!-- ҚАРАҒАНДЫ -->
+  <div class="marker"
+       style="top:50%; left:55%;"
+       onclick="showInfo('Қарағанды – Орталық Қазақстан')"></div>
+
+  <!-- АЛМАТЫ -->
+  <div class="marker"
+       style="top:66%; left:62%;"
+       onclick="showInfo('Алматы – ірі мәдени қала')"></div>
+
+  <!-- ТҮРКІСТАН -->
+  <div class="marker"
+       style="top:73%; left:48%;"
+       onclick="showInfo('Түркістан – Қожа Ахмет Ясауи кесенесі')"></div>
+
+  <!-- ҚЫЗЫЛОРДА / БАЙҚОҢЫР -->
+  <div class="marker"
+       style="top:63%; left:38%;"
+       onclick="showInfo('Қызылорда – Байқоңыр ғарыш айлағы')"></div>
+</div>
+
+<!-- Ақ терезе -->
+<div id="modal" onclick="closeModal()">
+  <div id="modalContent"></div>
+</div>
+
+<!-- 📝 ТЕСТ -->
+<h2>Тест</h2>
+
+<div class="question" data-correct="Астана">
+  1. Қазақстан астанасы қай қала?
+  <br>
+  <button class="answer">Астана</button>
+  <button class="answer">Алматы</button>
+  <button class="answer">Шымкент</button>
+</div>
+
+<div class="question" data-correct="Алматы">
+  2. Ірі мәдени қала?
+  <br>
+  <button class="answer">Алматы</button>
+  <button class="answer">Қарағанды</button>
+  <button class="answer">Атырау</button>
+</div>
+
+<div class="question" data-correct="Қарағанды">
+  3. Орталық Қазақстан қаласы?
+  <br>
+  <button class="answer">Қарағанды</button>
+  <button class="answer">Ақтау</button>
+  <button class="answer">Тараз</button>
+</div>
+
+<div class="question" data-correct="Түркістан">
+  4. Қожа Ахмет Ясауи қай қалада?
+  <br>
+  <button class="answer">Алматы</button>
+  <button class="answer">Түркістан</button>
+  <button class="answer">Астана</button>
+</div>
+
+<div class="question" data-correct="Қызылорда">
+  5. Байқоңыр қай облыста?
+  <br>
+  <button class="answer">Қызылорда</button>
+  <button class="answer">Ақтөбе</button>
+  <button class="answer">Жамбыл</button>
+</div>
+
+<br>
+<button onclick="checkTest()">Тексеру</button>
+<h3 id="score"></h3>
+
+<!-- 🎥 ВИДЕОЛАР -->
+<h2>Видеолар</h2>
+
+<div>
+  <video controls><source src="v1.mp4"></video><br>
+  Сан: <span id="c1">0</span> / 25<br>
+  <button onclick="count('c1')">Бас</button>
+</div>
+
+<div>
+  <video controls><source src="v2.mp4"></video><br>
+  Сан: <span id="c2">0</span> / 25<br>
+  <button onclick="count('c2')">Бас</button>
+</div>
+
+<div>
+  <video controls><source src="v3.mp4"></video><br>
+  Сан: <span id="c3">0</span> / 25<br>
+  <button onclick="count('c3')">Бас</button>
+</div>
+
+<script>
+// Ақ терезе
+function showInfo(text){
+  document.getElementById("modal").style.display="block";
+  document.getElementById("modalContent").textContent=text;
+}
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+// Жауап таңдау
+document.querySelectorAll(".answer").forEach(btn=>{
+  btn.onclick = ()=>{
+    let q = btn.parentElement;
+    q.querySelectorAll(".answer").forEach(b=>b.classList.remove("selected"));
+    btn.classList.add("selected");
+  }
+});
+
+// Тексеру
+function checkTest(){
+  let score = 0;
+  document.querySelectorAll(".question").forEach(q=>{
+    let correct = q.dataset.correct;
+    let sel = q.querySelector(".selected");
+    if(sel){
+      if(sel.textContent === correct){
+        sel.classList.add("correct");
+        score++;
+      } else {
+        sel.classList.add("wrong");
+      }
+    }
+  });
+  document.getElementById("score").textContent =
+    "Балл: " + score + " / 5";
+}
+
+// Санақ
+function count(id){
+  let el = document.getElementById(id);
+  let v = parseInt(el.textContent);
+  if(v < 25) el.textContent = v + 1;
+}
+</script>
+
+</body>
+</html>

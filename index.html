@@ -76,38 +76,23 @@ video {
 <h1>🇰🇿 Қазақстанның әйгілі жерлері</h1>
 
 <!-- 🎵 ФОН МУЗЫКА -->
-<audio autoplay loop>
+<audio id="bgMusic" autoplay loop>
   <source src="ән.mp3">
 </audio>
+
+<!-- 🎵 МУЗЫКА БАТЫРМАСЫ -->
+<br>
+<button onclick="toggleMusic()">🎵 Музыканы өшіру / қосу</button>
 
 <!-- 🗺️ КАРТА -->
 <div id="map-container">
   <img id="map" src="3.jpeg">
 
-  <!-- АСТАНА -->
-  <div class="marker"
-       style="top:36%; left:53%;"
-       onclick="showInfo('Астана – Қазақстан астанасы')"></div>
-
-  <!-- ҚАРАҒАНДЫ -->
-  <div class="marker"
-       style="top:50%; left:55%;"
-       onclick="showInfo('Қарағанды – Орталық Қазақстан')"></div>
-
-  <!-- АЛМАТЫ -->
-  <div class="marker"
-       style="top:66%; left:62%;"
-       onclick="showInfo('Алматы – ірі мәдени қала')"></div>
-
-  <!-- ТҮРКІСТАН -->
-  <div class="marker"
-       style="top:73%; left:48%;"
-       onclick="showInfo('Түркістан – Қожа Ахмет Ясауи кесенесі')"></div>
-
-  <!-- ҚЫЗЫЛОРДА / БАЙҚОҢЫР -->
-  <div class="marker"
-       style="top:63%; left:38%;"
-       onclick="showInfo('Қызылорда – Байқоңыр ғарыш айлағы')"></div>
+  <div class="marker" style="top:36%; left:53%;" onclick="showInfo('Астана – Қазақстан астанасы')"></div>
+  <div class="marker" style="top:50%; left:55%;" onclick="showInfo('Қарағанды – Орталық Қазақстан')"></div>
+  <div class="marker" style="top:66%; left:62%;" onclick="showInfo('Алматы – ірі мәдени қала')"></div>
+  <div class="marker" style="top:73%; left:48%;" onclick="showInfo('Түркістан – Қожа Ахмет Ясауи кесенесі')"></div>
+  <div class="marker" style="top:63%; left:38%;" onclick="showInfo('Қызылорда – Байқоңыр ғарыш айлағы')"></div>
 </div>
 
 <!-- Ақ терезе -->
@@ -162,27 +147,6 @@ video {
 <button onclick="checkTest()">Тексеру</button>
 <h3 id="score"></h3>
 
-<!-- 🎥 ВИДЕОЛАР -->
-<h2>Видеолар</h2>
-
-<div>
-  <video controls><source src="v1.mp4"></video><br>
-  Сан: <span id="c1">0</span> / 25<br>
-  <button onclick="count('c1')">Бас</button>
-</div>
-
-<div>
-  <video controls><source src="v2.mp4"></video><br>
-  Сан: <span id="c2">0</span> / 25<br>
-  <button onclick="count('c2')">Бас</button>
-</div>
-
-<div>
-  <video controls><source src="v3.mp4"></video><br>
-  Сан: <span id="c3">0</span> / 25<br>
-  <button onclick="count('c3')">Бас</button>
-</div>
-
 <script>
 // Ақ терезе
 function showInfo(text){
@@ -221,11 +185,14 @@ function checkTest(){
     "Балл: " + score + " / 5";
 }
 
-// Санақ
-function count(id){
-  let el = document.getElementById(id);
-  let v = parseInt(el.textContent);
-  if(v < 25) el.textContent = v + 1;
+// 🎵 Музыканы қосу / өшіру
+function toggleMusic(){
+  let music = document.getElementById("bgMusic");
+  if(music.paused){
+    music.play();
+  } else {
+    music.pause();
+  }
 }
 </script>
 

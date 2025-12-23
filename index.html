@@ -80,7 +80,6 @@ video {
   <source src="ән.mp3">
 </audio>
 
-<!-- 🎵 МУЗЫКА БАТЫРМАСЫ -->
 <br>
 <button onclick="toggleMusic()">🎵 Музыканы өшіру / қосу</button>
 
@@ -147,6 +146,27 @@ video {
 <button onclick="checkTest()">Тексеру</button>
 <h3 id="score"></h3>
 
+<!-- 🎥 Кері байланыс -->
+<h2>Кері байланыс</h2>
+
+<div>
+  <video controls><source src="v1.mp4"></video><br>
+  Сан: <span id="c1">0</span> / 25<br>
+  <button onclick="count('c1')">Бас</button>
+</div>
+
+<div>
+  <video controls><source src="v2.mp4"></video><br>
+  Сан: <span id="c2">0</span> / 25<br>
+  <button onclick="count('c2')">Бас</button>
+</div>
+
+<div>
+  <video controls><source src="v3.mp4"></video><br>
+  Сан: <span id="c3">0</span> / 25<br>
+  <button onclick="count('c3')">Бас</button>
+</div>
+
 <script>
 // Ақ терезе
 function showInfo(text){
@@ -185,14 +205,17 @@ function checkTest(){
     "Балл: " + score + " / 5";
 }
 
-// 🎵 Музыканы қосу / өшіру
+// Музыка
 function toggleMusic(){
   let music = document.getElementById("bgMusic");
-  if(music.paused){
-    music.play();
-  } else {
-    music.pause();
-  }
+  music.paused ? music.play() : music.pause();
+}
+
+// Видео санақ
+function count(id){
+  let el = document.getElementById(id);
+  let v = parseInt(el.textContent);
+  if(v < 25) el.textContent = v + 1;
 }
 </script>
 

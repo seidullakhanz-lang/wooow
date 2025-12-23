@@ -9,6 +9,8 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   background: linear-gradient(#cce7ff, #ffffff);
+  margin: 0;
+  padding: 20px;
 }
 
 h1 { color: #0057a8; }
@@ -20,9 +22,11 @@ h1 { color: #0057a8; }
 
 #map {
   width: 650px;
+  max-width: 100%;
   border: 3px solid #0057a8;
 }
 
+/* Маркерлер */
 .marker {
   position: absolute;
   width: 18px;
@@ -49,6 +53,7 @@ h1 { color: #0057a8; }
   font-weight: bold;
 }
 
+/* Батырмалар */
 button {
   padding: 10px 20px;
   margin: 6px;
@@ -56,6 +61,7 @@ button {
   cursor: pointer;
 }
 
+/* Тест */
 .answer {
   border: 1px solid #999;
 }
@@ -63,9 +69,18 @@ button {
 .correct { background: lightgreen; }
 .wrong { background: #ffb3b3; }
 
+/* Видео */
+.videoBox {
+  margin: 20px auto;
+  padding: 10px;
+  width: 320px;
+  border: 2px solid #0057a8;
+  border-radius: 10px;
+  background: #f5faff;
+}
+
 video {
   width: 300px;
-  margin: 10px;
   border: 2px solid #0057a8;
 }
 </style>
@@ -76,12 +91,13 @@ video {
 <h1>🇰🇿 Қазақстанның әйгілі жерлері</h1>
 
 <!-- 🎵 ФОН МУЗЫКА -->
-<audio id="bgMusic" autoplay loop>
-  <source src="ән.mp3">
+<audio id="bgMusic" loop>
+  <source src="ән.mp3" type="audio/mpeg">
 </audio>
 
-<br>
-<button onclick="toggleMusic()">🎵 Музыканы өшіру / қосу</button>
+<button onclick="toggleMusic()">🎵 Музыканы қосу / өшіру</button>
+
+<hr>
 
 <!-- 🗺️ КАРТА -->
 <div id="map-container">
@@ -99,44 +115,41 @@ video {
   <div id="modalContent"></div>
 </div>
 
+<hr>
+
 <!-- 📝 ТЕСТ -->
 <h2>Тест</h2>
 
 <div class="question" data-correct="Астана">
-  1. Қазақстан астанасы қай қала?
-  <br>
+  1. Қазақстан астанасы қай қала?<br>
   <button class="answer">Астана</button>
   <button class="answer">Алматы</button>
   <button class="answer">Шымкент</button>
 </div>
 
 <div class="question" data-correct="Алматы">
-  2. Ірі мәдени қала?
-  <br>
+  2. Ірі мәдени қала?<br>
   <button class="answer">Алматы</button>
   <button class="answer">Қарағанды</button>
   <button class="answer">Атырау</button>
 </div>
 
 <div class="question" data-correct="Қарағанды">
-  3. Орталық Қазақстан қаласы?
-  <br>
+  3. Орталық Қазақстан қаласы?<br>
   <button class="answer">Қарағанды</button>
   <button class="answer">Ақтау</button>
   <button class="answer">Тараз</button>
 </div>
 
 <div class="question" data-correct="Түркістан">
-  4. Қожа Ахмет Ясауи қай қалада?
-  <br>
+  4. Қожа Ахмет Ясауи қай қалада?<br>
   <button class="answer">Алматы</button>
   <button class="answer">Түркістан</button>
   <button class="answer">Астана</button>
 </div>
 
 <div class="question" data-correct="Қызылорда">
-  5. Байқоңыр қай облыста?
-  <br>
+  5. Байқоңыр қай облыста?<br>
   <button class="answer">Қызылорда</button>
   <button class="answer">Ақтөбе</button>
   <button class="answer">Жамбыл</button>
@@ -146,23 +159,34 @@ video {
 <button onclick="checkTest()">Тексеру</button>
 <h3 id="score"></h3>
 
-<!-- 🎥 Кері байланыс -->
+<hr>
+
+<!-- 🎥 КЕРІ БАЙЛАНЫС -->
 <h2>Кері байланыс</h2>
 
-<div>
-  <video controls><source src="v1.mp4"></video><br>
+<div class="videoBox">
+  <video controls playsinline preload="metadata">
+    <source src="v1.mp4" type="video/mp4">
+    Видео қолдамайды
+  </video><br>
   Сан: <span id="c1">0</span> / 25<br>
   <button onclick="count('c1')">Бас</button>
 </div>
 
-<div>
-  <video controls><source src="v2.mp4"></video><br>
+<div class="videoBox">
+  <video controls playsinline preload="metadata">
+    <source src="v2.mp4" type="video/mp4">
+    Видео қолдамайды
+  </video><br>
   Сан: <span id="c2">0</span> / 25<br>
   <button onclick="count('c2')">Бас</button>
 </div>
 
-<div>
-  <video controls><source src="v3.mp4"></video><br>
+<div class="videoBox">
+  <video controls playsinline preload="metadata">
+    <source src="v3.mp4" type="video/mp4">
+    Видео қолдамайды
+  </video><br>
   Сан: <span id="c3">0</span> / 25<br>
   <button onclick="count('c3')">Бас</button>
 </div>
@@ -170,11 +194,11 @@ video {
 <script>
 // Ақ терезе
 function showInfo(text){
-  document.getElementById("modal").style.display="block";
-  document.getElementById("modalContent").textContent=text;
+  document.getElementById("modal").style.display = "block";
+  document.getElementById("modalContent").textContent = text;
 }
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+  document.getElementById("modal").style.display = "none";
 }
 
 // Жауап таңдау
@@ -186,7 +210,7 @@ document.querySelectorAll(".answer").forEach(btn=>{
   }
 });
 
-// Тексеру
+// Тест тексеру
 function checkTest(){
   let score = 0;
   document.querySelectorAll(".question").forEach(q=>{
@@ -201,14 +225,13 @@ function checkTest(){
       }
     }
   });
-  document.getElementById("score").textContent =
-    "Балл: " + score + " / 5";
+  document.getElementById("score").textContent = "Балл: " + score + " / 5";
 }
 
 // Музыка
 function toggleMusic(){
-  let music = document.getElementById("bgMusic");
-  music.paused ? music.play() : music.pause();
+  let m = document.getElementById("bgMusic");
+  m.paused ? m.play() : m.pause();
 }
 
 // Видео санақ
